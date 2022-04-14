@@ -14,6 +14,8 @@ In this challenge i created a Frontend to consume the springboot challenge API
 
 Clone the repo and install NodeJS
 
+To use the frontend in local machine with the deployed api clone the "deploy" branch.
+
 ```bash
 git clone https://github.com/ozebe/springboot-challenge-01-frontend.git
 cd springboot-challenge-01-frontend-main
