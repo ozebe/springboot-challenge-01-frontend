@@ -1,6 +1,6 @@
 import alert from "./alert.js";
 
-var SERVER = 'localhost';
+var SERVER = 'springboot-challenge-01-api.herokuapp.com';
 var PORT = '8080';
 
 async function salvaPessoa(){
@@ -20,7 +20,7 @@ async function salvaPessoa(){
         alert('Verifique os dados', 'danger');
     }else{
         var dados = JSON.stringify({nome: nome, cpf: cpf, data_nasc: data_nasc, peso: peso, altura: altura, sexo: sexo});
-        const pessoaPOST = await fetch(`http://${SERVER}:${PORT}/pessoas`, {method: 'POST', body: dados, mode: 'cors', headers: {"Content-Type": "application/json"}});
+        const pessoaPOST = await fetch(`https://${SERVER}/pessoas`, {method: 'POST', body: dados, mode: 'cors', headers: {"Content-Type": "application/json"}});
         const response = await pessoaPOST.json();
         
         switch(response.erro){

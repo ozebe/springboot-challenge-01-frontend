@@ -1,6 +1,6 @@
 import alert from "./alert.js";
 
-var SERVER = 'localhost';
+var SERVER = 'springboot-challenge-01-api.herokuapp.com';
 var PORT = '8080';
 
 function addRowToTablePessoas(id, nome, cpf, datanascimento) {
@@ -26,12 +26,12 @@ async function carrregaDadosTabelaPessoas(nome = null) {
     try {
         let response = null;
         if(nome != null){
-            response = await fetch(`http://${SERVER}:${PORT}/pessoas?nome=${nome}`, {
+            response = await fetch(`https://${SERVER}/pessoas?nome=${nome}`, {
                 method: 'GET', mode: 'cors',
                 headers: { "Content-Type": "application/json" }
             });
         }else{
-            response = await fetch(`http://${SERVER}:${PORT}/pessoas`, {
+            response = await fetch(`https://${SERVER}/pessoas`, {
                 method: 'GET', mode: 'cors',
                 headers: { "Content-Type": "application/json" }
             });
@@ -54,7 +54,7 @@ window.excluiPessoa = async function (id) {
     if (window.confirm("Deseja realmente excluir o registro selecionado ?")) {
         alert('Carregando, aguarde... &#128564; &#128564;', 'warning');
 
-        await fetch(`http://${SERVER}:${PORT}/pessoas/${id}`, {
+        await fetch(`https://${SERVER}/pessoas/${id}`, {
             method: 'DELETE', mode: 'cors',
             headers: { "Content-Type": "application/json" }
         }).then(() => {
@@ -65,7 +65,7 @@ window.excluiPessoa = async function (id) {
 
 window.calculaPesoIdealPessoa = async function (id) {
     alert('Carregando, aguarde... &#128564; &#128564;', 'warning');
-    const pesoIdeal = await fetch(`http://${SERVER}:${PORT}/pessoas/pesoIdeal/${id}`, {
+    const pesoIdeal = await fetch(`https://${SERVER}/pessoas/pesoIdeal/${id}`, {
         method: 'GET',
         mode: 'cors',
         headers: { "Content-Type": "application/json" }
@@ -125,7 +125,7 @@ window.editaPessoa = async function (id) {
     alertPlaceholder.innerHTML = ""; //apaga o anterior antes de colocar outro
     alertPlaceholder.append(wrapper);
 
-    const response = await fetch(`http://${SERVER}:${PORT}/pessoas/${id}`, {
+    const response = await fetch(`https://${SERVER}/pessoas/${id}`, {
         method: 'GET', mode: 'cors',
         headers: { "Content-Type": "application/json" }
     });
@@ -164,7 +164,7 @@ window.salvaPessoaEditada = async function (id) {
 
         var novosDados = JSON.stringify({ nome: nome, cpf: cpf, data_nasc: data_nasc, peso: peso, altura: altura, sexo: sexo });
 
-        const pessoaPUT = await fetch(`http://${SERVER}:${PORT}/pessoas/${id}`, { method: 'PUT', body: novosDados, mode: 'cors', headers: { "Content-Type": "application/json" } });
+        const pessoaPUT = await fetch(`https://${SERVER}/pessoas/${id}`, { method: 'PUT', body: novosDados, mode: 'cors', headers: { "Content-Type": "application/json" } });
 
         const response = await pessoaPUT.status;
         switch (response) {
