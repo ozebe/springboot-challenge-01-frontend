@@ -20,7 +20,14 @@ async function salvaPessoa(){
         alert('Verifique os dados', 'danger');
     }else{
         var dados = JSON.stringify({nome: nome, cpf: cpf, data_nasc: data_nasc, peso: peso, altura: altura, sexo: sexo});
-        const pessoaPOST = await fetch(`https://${SERVER}/pessoas`, {method: 'POST', body: dados, mode: 'cors', headers: {"Content-Type": "application/json"}});
+        const pessoaPOST = await fetch(`https://${SERVER}/pessoas`, {
+            method: 'POST',
+            body: dados,
+            mode: 'cors',
+            headers: {"Content-Type": "application/json"}
+        });
+       
+         console.log(pessoaPOST);
         const response = await pessoaPOST.json();
         
         switch(response.erro){
@@ -32,7 +39,6 @@ async function salvaPessoa(){
                 document.querySelector("#peso").value = '';
                 document.querySelector("#altura").value = '';
                 document.querySelector("#sexo").value = 'Selecione';
-
                 break;
             default: 
                 alert("Ocorreu um erro! " + 'Cód: ' +response.erro, 'danger');
