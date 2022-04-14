@@ -20,14 +20,22 @@ function addRowToTablePessoas(id, nome, cpf, datanascimento) {
     pessoaPlaceHolder.append(wrapper);
 }
 
-async function carrregaDadosTabelaPessoas() {
+async function carrregaDadosTabelaPessoas(nome = null) {
     alert('Carregando, aguarde... &#128564; &#128564;', 'warning');
     document.querySelector('.table-pessoas-body').innerHTML = "";
     try {
-        const response = await fetch(`http://${SERVER}:${PORT}/pessoas`, {
-            method: 'GET', mode: 'cors',
-            headers: { "Content-Type": "application/json" }
-        });
+        let response = null;
+        if(nome != null){
+            response = await fetch(`http://${SERVER}:${PORT}/pessoas?nome=${nome}`, {
+                method: 'GET', mode: 'cors',
+                headers: { "Content-Type": "application/json" }
+            });
+        }else{
+            response = await fetch(`http://${SERVER}:${PORT}/pessoas`, {
+                method: 'GET', mode: 'cors',
+                headers: { "Content-Type": "application/json" }
+            });
+        }
 
         const data = await response.json().then(data => {
             for (let aluno of data.content) {
@@ -35,6 +43,7 @@ async function carrregaDadosTabelaPessoas() {
                 addRowToTablePessoas(aluno.id, aluno.nome, aluno.cpf, aluno.data_nasc);
             }
         });
+
     } catch (error) {
         console.error(error);
         alert(error, 'danger');
@@ -51,8 +60,6 @@ window.excluiPessoa = async function (id) {
         }).then(() => {
             document.location.reload(true);
         });
-
-        
     }
 }
 
@@ -176,7 +183,17 @@ window.salvaPessoaEditada = async function (id) {
 
 }
 
+async function buscaPessoas() {
+    var nomeBusca =document.querySelector("#busca").value;
+    carrregaDadosTabelaPessoas(nomeBusca);
+
+}
 //assim que carregar...
 window.onload = function () {
     carrregaDadosTabelaPessoas();
+
+    document.getElementById('form-busca').addEventListener('submit', function(event){
+        event.preventDefault();
+        buscaPessoas();
+      });
 };
