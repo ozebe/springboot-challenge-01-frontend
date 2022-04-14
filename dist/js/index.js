@@ -38,9 +38,9 @@ async function carrregaDadosTabelaPessoas(nome = null) {
         }
 
         const data = await response.json().then(data => {
-            for (let aluno of data.content) {
+            for (let pessoa of data.content) {
                 document.getElementById('liveAlertPlaceholder').innerHTML = "";
-                addRowToTablePessoas(aluno.id, aluno.nome, aluno.cpf, aluno.data_nasc);
+                addRowToTablePessoas(pessoa.id, pessoa.nome, pessoa.cpf, pessoa.data_nasc);
             }
         });
 
